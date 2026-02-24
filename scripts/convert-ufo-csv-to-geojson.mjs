@@ -3,7 +3,7 @@ import path from "node:path";
 import { parse } from "csv-parse/sync";
 
 const INPUT = path.resolve("data/raw/ufo_sightings.csv");
-const OUTPUT_DIR = path.resolve("data/processed");
+const OUTPUT_DIR = path.resolve("public/data");
 const OUTPUT = path.join(OUTPUT_DIR, "ufo_sightings.geojson");
 
 function toNumber(v) {
