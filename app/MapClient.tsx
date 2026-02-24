@@ -9,11 +9,11 @@ type MapClientProps = MapViewProps & {
   dataUrl?: string;
 };
 
-const USGS_URL = "/api/sightings";
+const DEFAULT_DATA_URL = "/data/ufo_sightings.geojson";;
 
 export default function MapClient({
   layers = [],
-  dataUrl = USGS_URL,
+  dataUrl = DEFAULT_DATA_URL,
   ...viewProps
 }: MapClientProps) {
   const [geojson, setGeojson] = useState<FeatureCollection | null>(null);
