@@ -12,9 +12,9 @@ type MapViewProps = {
 };
 
 const DEFAULT_VIEW_STATE: MapViewState = {
-  longitude: 18.0686, // Stockholm
-  latitude: 59.3293,
-  zoom: 2.2,
+  longitude: -98,
+  latitude: 39,
+  zoom: 3.5,
   pitch: 0,
   bearing: 0,
 };

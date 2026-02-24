@@ -9,8 +9,7 @@ type MapClientProps = MapViewProps & {
   dataUrl?: string;
 };
 
-const USGS_URL =
-  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+const USGS_URL = "/api/sightings";
 
 export default function MapClient({
   layers = [],
@@ -38,11 +37,14 @@ export default function MapClient({
 
     return [
       createGeoJsonPointLayer(geojson, {
-        id: "quakes",
+        id: "ufo",
         getFillColor: (f) => {
-          const mag = f.properties?.mag ?? 0;
-          const r = Math.min(255, Math.floor(60 + mag * 40));
-          return [r, 80, 200, 160];
+          const shape = (f.properties?.shape ?? "").toLowerCase();
+
+          // enkel “kategori-färg”: disk/triangle/other
+          if (shape.includes("triangle")) return [255, 120, 0, 160];
+          if (shape.includes("disk")) return [80, 200, 255, 160];
+          return [200, 120, 255, 160];
         },
       }),
     ];
