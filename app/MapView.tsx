@@ -1,5 +1,5 @@
 "use client";
-import type { Layer, MapViewState } from "@deck.gl/core";
+import type { Layer, MapViewState, PickingInfo } from "@deck.gl/core";
 import { DeckGL } from "@deck.gl/react";
 import Map from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -35,7 +35,7 @@ export default function MapView({
   }>(null);
 
 
-  const onClick = useCallback((info) => {
+  const onClick = useCallback((info: PickingInfo) => {
     if (!info.object) {
       setInfoBox(null);
       return;
@@ -55,7 +55,8 @@ export default function MapView({
           isHovering ? "pointer" : "grab"
         }
         onViewStateChange={({viewState}) => {
-          onZoomChange?.(viewState.zoom ?? 0);
+          const vs = viewState as MapViewState;
+         if (typeof vs.zoom === "number") onZoomChange?.(vs.zoom);
         }}
       >
         {infoBox && (
