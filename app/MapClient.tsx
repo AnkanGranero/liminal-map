@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import type { Layer } from "@deck.gl/core";
+import { createSightingsIconLayer } from "./helpers/createSightingsIconLayer";
 import type { FeatureCollection } from "geojson";
-import { createGeoJsonPointLayer } from "./helpers/createGeoJsonLayer";
 import MapView, { type MapViewProps } from "./MapView";
 
 type MapClientProps = MapViewProps & {
   dataUrl?: string;
 };
 
-const DEFAULT_DATA_URL = "/data/ufo_sightings.geojson";;
+const DEFAULT_DATA_URL = "/data/sightings.geojson";;
 
 export default function MapClient({
   layers = [],
@@ -32,25 +31,24 @@ export default function MapClient({
     };
   }, [dataUrl]);
 
+    const [zoom, setZoom] = useState<number>(
+  (viewProps.initialViewState?.zoom as number) ?? 3.5
+);
+const baseZoom = 3.5;
+const baseSize = 18;
+const scaleFactor = 3;
+
+const iconSize = Math.max(10, Math.round(baseSize + (zoom - baseZoom) * scaleFactor));
+
   const dataLayers = useMemo(() => {
     if (!geojson) return [];
-
+    
     return [
-      createGeoJsonPointLayer(geojson, {
-        id: "ufo",
-        getFillColor: (f) => {
-          const shape = (f.properties?.shape ?? "").toLowerCase();
-
-          // enkel “kategori-färg”: disk/triangle/other
-          if (shape.includes("triangle")) return [255, 120, 0, 160];
-          if (shape.includes("disk")) return [80, 200, 255, 160];
-          return [200, 120, 255, 160];
-        },
-      }),
+      createSightingsIconLayer(geojson, iconSize),
     ];
-  }, [geojson]);
+  }, [geojson, zoom]);
 
   const mergedLayers = layers.length ? layers : dataLayers;
 
-  return <MapView layers={mergedLayers} {...viewProps} />;
+  return <MapView layers={mergedLayers} onZoomChange={setZoom} {...viewProps} />;
 }
