@@ -1,7 +1,7 @@
 import { IconLayer } from "@deck.gl/layers";
 import type { Feature, FeatureCollection } from "geojson";
 
-export function createSightingsIconLayer(data: FeatureCollection) {
+export function createSightingsIconLayer(data: FeatureCollection, iconSize: number) {
   return new IconLayer({
     id: "sightings-icons",
     data: data.features,
@@ -23,6 +23,6 @@ export function createSightingsIconLayer(data: FeatureCollection) {
     },
 
     sizeUnits: "pixels",
-    getSize: 20, // håll nära 24
+    getSize: iconSize
   });
 }
