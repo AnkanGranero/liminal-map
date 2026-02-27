@@ -14,7 +14,7 @@ export function createSightingsIconLayer(data: FeatureCollection, iconSize: numb
     getIcon: (f) => {
       const type = (f as any).properties?.type;
       return {
-        url: type === "ufo" ? "/icons/ufo.png" : "/icons/cryptid.png",
+        url: type === "ufo" ? "icons/ufo.png" : "icons/cryptid.png",
         width: 24,
         height: 24,
         anchorX: 12,
