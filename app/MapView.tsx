@@ -51,6 +51,7 @@ export default function MapView({
         controller={controller}
         layers={layers}
         onClick={onClick}
+        pickingRadius={10}
         getCursor={({ isHovering }: { isHovering: boolean }) =>
           isHovering ? "pointer" : "grab"
         }
