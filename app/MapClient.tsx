@@ -8,7 +8,7 @@ type MapClientProps = MapViewProps & {
   dataUrl?: string;
 };
 
-const DEFAULT_DATA_URL = "/data/sightings.geojson";;
+const DEFAULT_DATA_URL = "data/sightings.geojson";;
 
 export default function MapClient({
   layers = [],
